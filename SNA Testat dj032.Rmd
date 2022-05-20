@@ -1,0 +1,69 @@
+---
+title: "Abgabe Testat"
+author: "Daniel Jelski"
+---
+
+# Analyse und Interpretation
+
+## Das Gesamtnetzwerk
+
+```{r Gesamnetzwerk erstellen, echo=FALSE}
+
+library(igraph)
+
+# Einlesen der Edge- und Nodelist
+el <- read.csv("https://raw.githubusercontent.com/Schnellski/Testat/main/dj032%20Edgelist.csv", header=T, as.is=T, sep = ",")
+nodes <- read.csv("https://raw.githubusercontent.com/Schnellski/Testat/main/dj032%20Nodelist.csv", header=T, as.is=T, sep = ",")
+
+
+# Matrix erstellen
+edgematrix <-as.matrix(el)
+
+
+
+# Zusammenführen von Edge- und Nodelist als igraph-Objekt s
+s <- graph_from_data_frame(d=edgematrix, directed=T)
+s
+
+```
+
+
+## Visualisierung
+
+
+```{r Einfache Visualisierung des erstellten Objekt, fig.height=6, fig.width=10}
+
+plot(s,
+     asp=-3,
+     layout=layout_nicely,
+     vertex.size=5,
+     vertex.frame.color=NA,
+     edge.arrow.size=.4,
+     vertex.color="red",
+     vertex.label.cex=.5,
+     vertex.label.color="black")
+```
+## Codebuch 
+
+Das Codebuch befindet sich an folgender Stelle auf GitHub: https://github.com/Schnellski/Testat/blob/main/Codebuch.md
+
+
+### Edgelist
+
+from: Land bzw. Verein des Spielers/Rückennummer
+
+to: Rückennummer des Spielers
+
+weight: Transfersumme in 100.000 Euro Schritten, gerundet falls abweichend
+
+season: transferfenster. nur erste Jahreszahl des Fensters als JJJJ verwenden
+
+### Nodelist
+
+id: Vereinsname/Rückennummer/Nationalität des Spielers
+
+country: Land
+
+name: Spielername/Vereinsname
+
+type: Art des Akteurs (1: Spieler, 2: Verein)
